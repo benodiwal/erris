@@ -1,5 +1,6 @@
 // region: --- modules 
 pub mod asst;
+mod msg;
 
 use crate::Result;
 use async_openai::{Client, config::OpenAIConfig};
@@ -8,6 +9,7 @@ use async_openai::{Client, config::OpenAIConfig};
 // region:: --- client
 
 const ENV_OPENAI_API_KEY: &str = "OPENAI_API_KEY";
+const POLLING_DURATION_MS: u64 = 500;
 
 pub type OaClient = Client<OpenAIConfig>;
 

@@ -27,3 +27,5 @@ walkdir = "2"
 globset = "0.4"
 # --Others
 derive_more = { version = "0.99.17", features = ["from", "display", "deref"] }
+# --Dotenv
+dotenv = "0.15.0"
