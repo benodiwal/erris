@@ -2,7 +2,6 @@ use async_openai::types::{CreateMessageRequest, MessageObject, MessageContent};
 use crate::Result;
 
 // region: -- Message Constructors
-
 pub fn user_msg(content: impl Into<String>) -> CreateMessageRequest {
     CreateMessageRequest {
         role: "user".to_string(),
@@ -10,11 +9,9 @@ pub fn user_msg(content: impl Into<String>) -> CreateMessageRequest {
         ..Default::default()
     }
 }
-
 // endregion: -- Message Constructors
 
 // region: -- Content Extractor
-
 pub fn get_text_content(msg: MessageObject) -> Result<String> {
     
     let msg_content = msg.content.into_iter().next().ok_or_else(|| "No message content found".to_string())?;   
@@ -27,5 +24,4 @@ pub fn get_text_content(msg: MessageObject) -> Result<String> {
 
     Ok(txt)
 }
-
 // endregion: -- Content Extractor

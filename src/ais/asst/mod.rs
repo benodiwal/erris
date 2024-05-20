@@ -9,13 +9,10 @@ use console::Term;
 use derive_more::{From, Deref, Display};
 
 // region: -- Constants
-
 const DEFAULT_QUERY: &[(&str, &str)] = &[("limit", "100")];
-
 // endregion: --Constants
 
 // region:  --Types
-
 pub struct CreateConfig {
     pub name: String,
     pub model: String,
@@ -29,17 +26,14 @@ pub struct ThreadId(String);
 
 #[derive(Debug, From, Deref, Display)]
 pub struct FileId(String);
-
 // endregion: -- Types
 
 // region: -- Asst CRUD
-
-pub async fn create(oac: &OaClient, config: CreateConfig) -> Result<AsstId> {
-
+pub async fn create(oac: &OaClient, config: &CreateConfig) -> Result<AsstId> {
     let oa_assts = oac.assistants();
     let asst_obj = oa_assts.create(CreateAssistantRequest {
-        model: config.model,
-        name: Some(config.name),
+        model: (config.model).to_string(),
+        name: Some((config.name).to_string()),
         tools: Some(vec![AssistantToolsRetrieval::default().into()]),
         ..Default::default()
     })
@@ -67,8 +61,8 @@ pub async fn load_or_create_asst(
         println!("Assistant {} loaded", config.name);
         Ok(asst_id)
     } else {
-        // let asst_name = config.name.clone();
-        let asst_id = create(oac, config).await?;
+        let asst_id = create(oac, &config).await?;
+        println!("Assistant {} created", config.name);
         Ok(asst_id)
     }
 
@@ -105,11 +99,9 @@ pub async fn delete(oac: &OaClient, asst_id: &AsstId) -> Result<()> {
     oa_assts.delete(asst_id).await?;
     Ok(())
 }
-
 // endregion: -- Asst CRUD
 
 // region : -- Thread
-
 pub async fn create_thread(
     oac: &OaClient
 ) -> Result<ThreadId> {
@@ -121,9 +113,10 @@ pub async fn create_thread(
     })
     .await?;
     
-    Ok(res.id.into())               
+    Ok(res.id.into())
 }
 
+#[allow(unused)]
 pub async fn get_thread(
     oac: &OaClient,
     thread_id: &ThreadId,
@@ -161,7 +154,7 @@ pub async fn run_thread_msg(
 
         match run.status {
             RunStatus::Completed => {
-                term.write_str("\n")?;                
+                term.write_str("\n")?;          
                 return get_first_thread_msg_content(oac, thread_id).await;
             }
             RunStatus::Queued | RunStatus::InProgress => (),
@@ -186,5 +179,4 @@ pub async fn get_first_thread_msg_content(oac: &OaClient, thread_id: &ThreadId) 
     Ok(text)
     
 }
-
 // endregion : --Thread
