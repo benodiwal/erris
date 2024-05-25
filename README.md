@@ -9,7 +9,7 @@ A silly terminal-based client to interact with GPT models using the OpenAI API. 
 
 ### Clone the Respository  
 ```
-$ git clone
+$ git clone git@github.com:benodiwal/bud.git
 $ cd bud
 ```
 
