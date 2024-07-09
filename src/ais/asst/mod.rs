@@ -8,11 +8,8 @@ use async_openai::types::{AssistantObject, AssistantToolsRetrieval, CreateAssist
 use console::Term;
 use derive_more::{From, Deref, Display};
 
-// region: -- Constants
 const DEFAULT_QUERY: &[(&str, &str)] = &[("limit", "100")];
-// endregion: --Constants
 
-// region:  --Types
 pub struct CreateConfig {
     pub name: String,
     pub model: String,
@@ -26,9 +23,7 @@ pub struct ThreadId(String);
 
 #[derive(Debug, From, Deref, Display)]
 pub struct FileId(String);
-// endregion: -- Types
 
-// region: -- Asst CRUD
 pub async fn create(oac: &OaClient, config: &CreateConfig) -> Result<AsstId> {
     let oa_assts = oac.assistants();
     let asst_obj = oa_assts.create(CreateAssistantRequest {
@@ -99,9 +94,7 @@ pub async fn delete(oac: &OaClient, asst_id: &AsstId) -> Result<()> {
     oa_assts.delete(asst_id).await?;
     Ok(())
 }
-// endregion: -- Asst CRUD
 
-// region : -- Thread
 pub async fn create_thread(
     oac: &OaClient
 ) -> Result<ThreadId> {
@@ -179,4 +172,3 @@ pub async fn get_first_thread_msg_content(oac: &OaClient, thread_id: &ThreadId) 
     Ok(text)
     
 }
-// endregion : --Thread

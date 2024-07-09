@@ -1,12 +1,9 @@
-// region: --- modules 
 pub mod asst;
 mod msg;
 
 use crate::Result;
 use async_openai::{Client, config::OpenAIConfig};
-// endregion: --modules
 
-// region:: --- client
 const ENV_OPENAI_API_KEY: &str = "OPENAI_API_KEY";
 const POLLING_DURATION_MS: u64 = 500;
 
@@ -20,4 +17,3 @@ pub fn new_oa_client() -> Result<OaClient> {
         Err("No openai API key is in env".into())
     }
 }
-// endregion: --- client
