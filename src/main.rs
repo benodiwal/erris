@@ -1,4 +1,4 @@
-use bud::cli::prompt;
+use bud::cli::{prompt, Cmd};
 use bud::env;
 use bud::ais::{asst, new_oa_client};
 use bud::ais::asst::CreateConfig;
@@ -36,8 +36,16 @@ async fn start() -> Result<()> {
 
     loop {
         let input = prompt("Ask Smth 😊")?;
-        let msg = asst::run_thread_msg(&oac, &asst_id, &thread_id, input.as_ref()).await?;
-        println!("{}", msg);
+        let cmd = Cmd::from_input(input);
+        match cmd {
+            Cmd::Quit => break,
+            Cmd::Chat(msg) => {
+                let msg = asst::run_thread_msg(&oac, &asst_id, &thread_id, msg.as_ref()).await?;
+                println!("{}", msg);
+            }
+        }
     }
+
+    Ok(())
 
 }

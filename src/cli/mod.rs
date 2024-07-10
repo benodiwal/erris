@@ -15,3 +15,21 @@ pub fn prompt(text: &str) -> Result<String> {
 
 	Ok(res)
 }
+
+pub enum Cmd {
+	Quit,
+	Chat(String),
+}
+
+impl Cmd {
+	pub fn from_input(input: impl Into<String>) -> Self {
+		let input = input.into();
+		
+		if input == r"\q" {
+			Self::Quit
+		} else {
+			Self::Chat(input)
+		}
+
+	}
+}
