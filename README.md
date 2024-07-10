@@ -1,4 +1,4 @@
-# Bud !!
+# Erris
 
 A silly terminal-based client to interact with GPT models using the OpenAI API. This project is built with Rust to provide a simple, interactive command-line application for engaging with OpenAI's language models.  
 
@@ -9,8 +9,8 @@ A silly terminal-based client to interact with GPT models using the OpenAI API. 
 
 ### Clone the Respository  
 ```
-$ git clone git@github.com:benodiwal/bud.git
-$ cd bud
+$ git clone git@github.com:benodiwal/erris.git
+$ cd erris
 ```
 
 ### Build the Project
