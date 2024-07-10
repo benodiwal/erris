@@ -1,7 +1,7 @@
 use tokio::time::sleep;
 use std::time::Duration;
 
-use crate::Result;
+use crate::error::Result;
 use crate::ais::msg::{get_text_content, user_msg};
 use crate::ais::{OaClient, POLLING_DURATION_MS};
 use async_openai::types::{AssistantObject, AssistantToolsRetrieval, CreateAssistantRequest, CreateRunRequest, CreateThreadRequest, ModifyAssistantRequest, RunStatus, ThreadObject};

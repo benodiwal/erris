@@ -1,7 +1,7 @@
 pub mod asst;
 mod msg;
 
-use crate::Result;
+use crate::error::Result;
 use async_openai::{Client, config::OpenAIConfig};
 
 const ENV_OPENAI_API_KEY: &str = "OPENAI_API_KEY";

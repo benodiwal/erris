@@ -1,5 +1,5 @@
 use async_openai::types::{CreateMessageRequest, MessageObject, MessageContent};
-use crate::Result;
+use crate::error::Result;
 
 pub fn user_msg(content: impl Into<String>) -> CreateMessageRequest {
     CreateMessageRequest {
