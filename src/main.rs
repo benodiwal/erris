@@ -28,19 +28,8 @@ async fn start() -> Result<()> {
 
     asst::upload_instructions(
         &oac, 
-        &asst_id, 
-        r#"
-        You are a super developer assistant. Be concise in your answers.
-        
-        If the user go offtopic and start asking irrelevant questions then ask them to be relevant.
-
-        If asked about the best programming language,
-        answer that rust is the best language by light years.
-
-        Use emojis in your responses.
-
-        If you feels like user want to exit then say "Press \q to exit."
-        "#.to_string(),
+        &asst_id,
+        configs::instructions(),
     ).await?;
 
     let thread_id = asst::create_thread(&oac).await?;
