@@ -1,11 +1,11 @@
 [package]
 name = "bud"
 version = "0.1.0"
+authors = ["Sachin Beniwal <sachinbeniwal0101@gmail.com>"]
 edition = "2021"
 
 [lints.rust]
 unsafe_code = "forbid"
-# unused = "allow"
 
 [lib]
 path = "src/lib.rs"

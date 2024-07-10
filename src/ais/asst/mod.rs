@@ -1,14 +1,12 @@
 use tokio::time::sleep;
 use std::time::Duration;
-
 use crate::error::Result;
 use crate::ais::msg::{get_text_content, user_msg};
-use crate::ais::{OaClient, POLLING_DURATION_MS};
+use crate::ais::OaClient;
+use crate::utils::constants;
 use async_openai::types::{AssistantObject, AssistantToolsRetrieval, CreateAssistantRequest, CreateRunRequest, CreateThreadRequest, ModifyAssistantRequest, RunStatus, ThreadObject};
 use console::Term;
 use derive_more::{From, Deref, Display};
-
-const DEFAULT_QUERY: &[(&str, &str)] = &[("limit", "100")];
 
 pub struct CreateConfig {
     pub name: String,
@@ -21,9 +19,6 @@ pub struct AsstId(String);
 #[derive(Debug, From, Deref, Display)]
 pub struct ThreadId(String);
 
-#[derive(Debug, From, Deref, Display)]
-pub struct FileId(String);
-
 pub async fn create(oac: &OaClient, config: &CreateConfig) -> Result<AsstId> {
     let oa_assts = oac.assistants();
     let asst_obj = oa_assts.create(CreateAssistantRequest {
@@ -35,7 +30,6 @@ pub async fn create(oac: &OaClient, config: &CreateConfig) -> Result<AsstId> {
     .await?;
 
     Ok(asst_obj.id.into())
-
 }
 
 pub async fn load_or_create_asst(
@@ -68,7 +62,7 @@ pub async fn first_by_name(
     name: &str,
 ) -> Result<Option<AssistantObject>> {
     let oa_assts = oac.assistants();
-    let assts = oa_assts.list(DEFAULT_QUERY).await?.data;
+    let assts = oa_assts.list(constants::DEFAULT_QUERY).await?.data;
     let asst_obj = assts.into_iter().find(|a| a.name.as_ref().map(|n| n == name).unwrap_or(false));
     
     Ok(asst_obj)
@@ -109,7 +103,6 @@ pub async fn create_thread(
     Ok(res.id.into())
 }
 
-#[allow(unused)]
 pub async fn get_thread(
     oac: &OaClient,
     thread_id: &ThreadId,
@@ -157,15 +150,14 @@ pub async fn run_thread_msg(
             }
         }
 
-        sleep(Duration::from_millis(POLLING_DURATION_MS)).await;
+        sleep(Duration::from_millis(constants::POLLING_DURATION_MS)).await;
     }
 
 }
 
 pub async fn get_first_thread_msg_content(oac: &OaClient, thread_id: &ThreadId) -> Result<String> {
 
-    static QUERY: [(&str, &str); 1] = [("limit", "1")];
-    let messages = oac.threads().messages(thread_id).list(&QUERY).await?;
+    let messages = oac.threads().messages(thread_id).list(&constants::QUERY).await?;
     let msg = messages.data.into_iter().next().ok_or_else(|| "No message found".to_string())?;
 
     let text = get_text_content(msg)?;    

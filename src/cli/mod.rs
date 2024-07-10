@@ -6,7 +6,7 @@ use dialoguer::Input;
 pub fn prompt(text: &str) -> Result<String> {
 	let theme = ColorfulTheme {
 		prompt_style: Style::new().for_stderr().color256(45),
-		prompt_prefix: style("?".to_string()).color256(45).for_stderr(),
+		prompt_prefix: style(">> ".to_string()).color256(45).for_stderr(),
 		..ColorfulTheme::default()
 	};
 
