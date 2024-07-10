@@ -1,6 +1,6 @@
 # Erris
 
-A silly terminal-based client to interact with GPT models using the OpenAI API. This project is built with Rust to provide a simple, interactive command-line application for engaging with OpenAI's language models.  
+A quirky terminal-based assistant designed to help programmers with their coding queries and development tasks.
 
 ## Installation  
 ### Prerequisites  
