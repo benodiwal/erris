@@ -1,5 +1,5 @@
 use crate::error::Result;
-use console::{style, Style, StyledObject};
+use console::{style, Style};
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::Input;
 
@@ -14,32 +14,4 @@ pub fn prompt(text: &str) -> Result<String> {
 	let res = input.with_prompt(text).interact_text()?;
 
 	Ok(res)
-}
-
-pub fn ico_res() -> StyledObject<&'static str> {
-	style("➤").color256(45)
-}
-
-pub fn ico_check() -> StyledObject<&'static str> {
-	style("✔").green()
-}
-
-pub fn ico_uploading() -> StyledObject<&'static str> {
-	style("↥").yellow()
-}
-
-pub fn ico_uploaded() -> StyledObject<&'static str> {
-	style("↥").green()
-}
-
-pub fn ico_deleted_ok() -> StyledObject<&'static str> {
-	style("⌫").green()
-}
-
-pub fn ico_err() -> StyledObject<&'static str> {
-	style("✗").red()
-}
-
-pub fn txt_res(text: String) -> StyledObject<String> {
-	style(text).bright()
 }
